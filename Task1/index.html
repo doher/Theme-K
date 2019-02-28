@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="block">
+        <h1>Main Page</h1>
+    </div>
+    <input type="button" value="about" onclick="goAbout()">
+    <input type="button" value="gallery" onclick="goGallery()">
+
+    <script>
+        function goAbout() {
+            location.hash = 'about';
+        }
+
+        function goGallery() {
+            location.hash = 'gallery';
+        }
+
+        window.onhashchange = loadNewPage;
+
+        function loadNewPage() {
+            var hash = location.hash.substr(1);
+            loadData(hash);
+        }
+
+        function loadData(page) {
+            $.ajax(page + '.html',
+                {
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function (data) {
+                        document.getElementById('block').innerHTML = data;
+                    }
+                }
+            );
+        }
+
+        $.ajax("test.json",
+            {
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                }
+            }
+        );        
+    </script>
+</body>
+
+</html>
