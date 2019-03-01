@@ -3,10 +3,20 @@
 document.body.addEventListener('click', function (e) {
     e = e || window.event;
     e.preventDefault();
+
+    let item = e.target;
+
+    if (item.getAttribute('data-list') === 'article') {
+        goArticle();
+    }
 });
 
 function goContents() {
     location.hash = 'contents';
+}
+
+function goArticle() {
+    location.hash = 'article';
 }
 
 window.onhashchange = loadNewPage;
@@ -18,7 +28,11 @@ function loadNewPage() {
 
     switch (hash) {
         case 'contents':
-            loadContentsPage(hash);
+            loadContentsPage();
+            break;
+
+        case 'article':
+            loadArticlePage();
             break;
 
         default:
@@ -52,23 +66,37 @@ function loadContentsPage() {
             sectionsList.forEach(element => {
                 const articles = data.articles[element],
                     ul = document.createElement('ul'),
+                    section = document.createElement('section'),
                     h2 = document.createElement('h2');
 
                 h2.innerHTML = element;
-                mainContext.appendChild(h2);
+                section.appendChild(h2);
 
                 articles.forEach(element => {
                     const li = document.createElement('li'),
                         a = document.createElement('a');
 
                     a.setAttribute('href', '#');
+                    a.setAttribute('data-list', 'article');
                     a.innerHTML = element;
 
                     li.appendChild(a);
                     ul.appendChild(li);
-                    mainContext.appendChild(ul);
+                    section.appendChild(ul);
                 });
+
+                mainContext.appendChild(section);
             });
+        }
+    });
+}
+
+function loadArticlePage() {
+    $.ajax("article.html", {
+        type: 'GET',
+        dataType: 'html',
+        success: function (data) {
+            document.body.innerHTML = data;
         }
     });
 }

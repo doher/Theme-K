@@ -1,0 +1,19 @@
+*, *:after, *:before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+section {
+    margin: 20px;
+}
+
+.main-context {
+    display: flex;
+    justify-content: baseline;
+}
+
