@@ -1,41 +1,74 @@
 'use strict';
 
+document.body.addEventListener('click', function (e) {
+    e = e || window.event;
+    e.preventDefault();
+});
+
 function goContents() {
     location.hash = 'contents';
 }
 
-window.addEventListener('hashchange', function loadNewPage() {
+window.onhashchange = loadNewPage;
+
+loadNewPage();
+
+function loadNewPage() {
     var hash = location.hash.substr(1);
 
-    loadData(hash);
-}, false);
+    switch (hash) {
+        case 'contents':
+            loadContentsPage(hash);
+            break;
 
-function loadData() {
+        default:
+            loadMainPage();
+            break;
+    }
+}
+
+function loadMainPage() {
+    $.ajax("index.html", {
+        type: 'GET',
+        dataType: 'html',
+        success: function (data) {
+            document.body.innerHTML = data;
+        }
+    });
+}
+
+function loadContentsPage() {
     $.ajax("articles.json", {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
             const h1 = document.querySelector('.heading'),
                 mainContext = document.querySelector('.main-context'),
-                ul = document.createElement('ul');
+                sectionsList = Object.keys(data.articles),
+                namePage = data.name;
 
-            h1.innerHTML = data.name;
+            h1.innerHTML = namePage;
 
-            console.log(data.name);
+            sectionsList.forEach(element => {
+                const articles = data.articles[element],
+                    ul = document.createElement('ul'),
+                    h2 = document.createElement('h2');
 
-            for (const key in data.articles) {
-                if (data.articles.hasOwnProperty(key)) {
-                    const element = data.articles[key],
-                        li = document.createElement('li'),
+                h2.innerHTML = element;
+                mainContext.appendChild(h2);
+
+                articles.forEach(element => {
+                    const li = document.createElement('li'),
                         a = document.createElement('a');
 
+                    a.setAttribute('href', '#');
                     a.innerHTML = element;
+
                     li.appendChild(a);
                     ul.appendChild(li);
-                }
-            }
-
-            mainContext.appendChild(ul);
+                    mainContext.appendChild(ul);
+                });
+            });
         }
     });
 }
