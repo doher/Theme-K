@@ -52,40 +52,50 @@ function loadMainPage() {
 }
 
 function loadContentsPage() {
-    $.ajax("articles.json", {
+    $.ajax("content.html", {
         type: 'GET',
-        dataType: 'json',
+        dataType: 'html',
         success: function (data) {
-            const h1 = document.querySelector('.heading'),
-                mainContext = document.querySelector('.main-context'),
-                sectionsList = Object.keys(data.articles),
-                namePage = data.name;
+            const main = document.querySelector('.changed-block');
 
-            h1.innerHTML = namePage;
+            main.innerHTML = data;
 
-            sectionsList.forEach(element => {
-                const articles = data.articles[element],
-                    ul = document.createElement('ul'),
-                    section = document.createElement('section'),
-                    h2 = document.createElement('h2');
+            $.ajax("articles.json", {
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const h1 = document.querySelector('.heading'),
+                        mainContext = document.querySelector('.main-context'),
+                        sectionsList = Object.keys(data.articles),
+                        namePage = data.name;
 
-                h2.innerHTML = element;
-                section.appendChild(h2);
+                    h1.innerHTML = namePage;
 
-                articles.forEach(element => {
-                    const li = document.createElement('li'),
-                        a = document.createElement('a');
+                    sectionsList.forEach(element => {
+                        const articles = data.articles[element],
+                            ul = document.createElement('ul'),
+                            section = document.createElement('section'),
+                            h2 = document.createElement('h2');
 
-                    a.setAttribute('href', '#');
-                    a.setAttribute('data-list', 'article');
-                    a.innerHTML = element;
+                        h2.innerHTML = element;
+                        section.appendChild(h2);
 
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                    section.appendChild(ul);
-                });
+                        articles.forEach(element => {
+                            const li = document.createElement('li'),
+                                a = document.createElement('a');
 
-                mainContext.appendChild(section);
+                            a.setAttribute('href', '#');
+                            a.setAttribute('data-list', 'article');
+                            a.innerHTML = element;
+
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                            section.appendChild(ul);
+                        });
+
+                        mainContext.appendChild(section);
+                    });
+                }
             });
         }
     });
@@ -96,7 +106,9 @@ function loadArticlePage() {
         type: 'GET',
         dataType: 'html',
         success: function (data) {
-            document.body.innerHTML = data;
+            const main = document.querySelector('.changed-block');
+
+            main.innerHTML = data;
         }
     });
 }
