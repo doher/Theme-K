@@ -1,35 +1,32 @@
 {
-    "name": "Contents",
-    "articles": {
-        "A": [
-            "article_A1",
-            "article_A2",
-            "article_A3"
-        ],
-        "B": [
-            "article_B1",
-            "article_B2",
-            "article_B3",
-            "article_B4"
-        ],
-        "D": [
-            "article_D1",
-            "article_D2",
-            "article_D3"
-        ],
-        "F": [
-            "article_F1"
-        ],
-        "J": [
-            "article_J1",
-            "article_J2"
-        ],
-        "K": [
-            "article_K1",
-            "article_K2",
-            "article_K3",
-            "article_K4",
-            "article_K5"
-        ]
+    "a": {
+        "article1": "article1.html",
+        "article2": "article2.html",
+        "article3": "article3.html"
+    },
+    "b": {
+        "article1": "article1.html",
+        "article2": "article2.html",
+        "article3": "article3.html",
+        "article4": "article4.html"
+    },
+    "d": {
+        "article1": "article1.html",
+        "article2": "article2.html",
+        "article3": "article3.html"
+    },
+    "f": {
+        "article1": "article1.html"
+    },
+    "j": {
+        "article1": "article1.html",
+        "article2": "article2.html"
+    },
+    "k": {
+        "article1": "article1.html",
+        "article2": "article2.html",
+        "article3": "article3.html",
+        "article4": "article4.html",
+        "article5": "article5.html"
     }
 }
